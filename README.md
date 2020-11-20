@@ -15,11 +15,17 @@ The target of this project is to evaluate :
 * A descriptor is a vector of values, which describes the image patch around a keypoint. 
 
 ### SW Architecture
- 
-#### Overview
 <img src="images/Camera_Pipeline.png" width="400" height="408" />
 
-#### Load Images into into ring buffer
+#### Step 0 : Preliminary 2 .cpp file are useful :
+* 'Matching2D_Student.cpp' + 'matching2D.hpp' : 
+  - Detection Keypoints functions (Harris+ Shi Tomasi + Modern methods), 
+  - Descriptor function to extract the keypoint and the descriptors, 
+  - Matching function from 2 images from the same camera
+
+* 'MidTermProject_Camera_Student.cpp' : main programm : the functions are called one by one as defined in the software architecture 
+
+#### Step 1 : Load Images into into ring buffer
         int dataBufferSize = 3;       // no. of images which are held in memory (ring buffer) at the same time
         // push image into data frame buffer
         DataFrame frame;
@@ -40,7 +46,7 @@ The target of this project is to evaluate :
         //// EOF STUDENT ASSIGNMENT
         cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
 
-#### Keypoints detection in the image with 2 methodes + Box around the preceding vehicle :
+#### Step 2 : Keypoints detection in the image with 2 methodes + Box around the preceding vehicle :
 * Intensity gradient detectors (Harris and Shi Tomasi)
 * Fast detectors (FAST, BRIEF, ORB.....)
 
@@ -96,7 +102,7 @@ This code for the specifics Keypoint selection is below:
 You can find the results in this picture (after the keypoint selection with the FAST algorithm) : 
 <img src="images/Keypoints.png" width="820" height="248" />
 
-#### Keypoints extraction with the descriptors (bouding box around the keypoints) : 
+#### Step 3 : Keypoints extraction with the descriptors (bouding box around the keypoints) : 
 * HOG family as the SIFT (Scale Invariant Feature Transform) 
 * Binary Descriptors family as the BRISK (Binary Robust Invariant Scalable Keypoints
 
@@ -121,7 +127,7 @@ You can find the results in this picture (after the keypoint selection with the 
 
 The function "descKeypoints()" for the extraction of the descriptors is defined in the module matching2D_Student.cpp. 
 
-#### Keypoints descriptors matching between 2 sequential images from a mono camera with two methods : 
+#### Step 4 : Keypoints descriptors matching between 2 sequential images from a mono camera with two methods : 
 * BFM (Brute force matching)
 * FLANN (Fast library for approximate nearest neighbors) with the KD-Tree data structure.
 
@@ -150,17 +156,17 @@ The function "descKeypoints()" for the extraction of the descriptors is defined 
 
 The FLANN mtching and the KNN match selection are implemented in "MatchDescriptors ()" in matching2D.cpp :
 
-
 You can find the results in this picture (FLANN algorithm) : 
 <img src="images/Detectors_Descriptors_Matching.png" width="820" height="248" />
 
-#### 2 .cpp file are useful :
-* 'Matching2D_Student.cpp' + 'matching2D.hpp' : 
-  - Detection Keypoints functions (Harris+ Shi Tomasi + Modern methods), 
-  - Descriptor function to extract the keypoint and the descriptors, 
-  - Matching function from 2 images from the same camera
+#### Step 5 : Performance evaluation
 
-* 'MidTermProject_Camera_Student.cpp' : main programm : the functions are called one by one as defined in the software architecture 
+For the number of Keypoints for every Detectors :
+<img src="images/Keypoints_result.png" width="820" height="248" />
+
+For the final results (Keypoints matching with the combinaison of detectors and descriptors + execution time evaluation) :
+<img src="images/Best_Compromise.png" width="820" height="400" />
+
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
