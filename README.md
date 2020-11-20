@@ -1,15 +1,50 @@
-# SFND 2D Feature Tracking
+### Camera based 2D Feature Tracking
+#### Build a collision detection system with a mono camera
+## ----------------------------------------
 
-<img src="images/keypoints.png" width="820" height="248" />
+<img src="images/Detectors_Desriptors_Matching.png" width="820" height="248" />
 
-The idea of the camera course is to build a collision detection system - that's the overall goal for the Final Project. As a preparation for this, you will now build the feature tracking part and test various detector / descriptor combinations to see which ones perform best. This mid-term project consists of four parts:
+The target of this project is to evaluate :
+* The differents methods to track the features
+* The descriptors extraction methodes
+* The performance of the matching methodes (criterion : execution time for the keypoint detection and descriptor extraction, number of matching keypoints with the combinations of detectors and descriptors). 
 
-* First, you will focus on loading images, setting up data structures and putting everything into a ring buffer to optimize memory load. 
-* Then, you will integrate several keypoint detectors such as HARRIS, FAST, BRISK and SIFT and compare them with regard to number of keypoints and speed. 
-* In the next part, you will then focus on descriptor extraction and matching using brute force and also the FLANN approach we discussed in the previous lesson. 
-* In the last part, once the code framework is complete, you will test the various algorithms in different combinations and compare them with regard to some performance measures. 
+### Vocabulary 
 
-See the classroom instruction and code comments for more details on each of these parts. Once you are finished with this project, the keypoint matching part will be set up and you can proceed to the next lesson, where the focus is on integrating Lidar points and on object detection using deep-learning. 
+* A keypoint (interest point) detector is an algorithm that chooses points from an image based on a local maximum of a funtion.
+* A descriptor is a vector of values, which describes the image patch around a keypoint. 
+
+### SW Architecture
+ 
+#### Overview
+<img src="images/Camera_Pipeline.png" width="820" height="248" />
+
+#### Load Images into into ring buffer
+
+#### Keypoints detection in the image with 2 methodes + Box around the preceding vehicle :
+* Intensity gradient detectors (Harris and Shi Tomasi)
+* Fast detectors (FAST, BRIEF, ORB.....)
+
+<img src="images/Keypoints.png" width="820" height="248" />
+
+#### Keypoints extraction with the descriptors (bouding box around the keypoints) : 
+* HOG family as the SIFT (Scale Invariant Feature Transform) 
+* Binary Descriptors family as the BRISK (Binary Robust Invariant Scalable Keypoints
+
+
+#### Keypoints descriptors matching between 2 sequential images from a mono camera with two methods : 
+* BFM (Brute force matching)
+* FLANN (Fast library for approximate nearest neighbors) with the KD-Tree data structure.
+
+<img src="images/Detectors_Descriptors_Matching.png" width="820" height="248" />
+
+#### 2 .cpp file are useful :
+* 'Matching2D_Student.cpp' + 'matching2D.hpp' : 
+  - Detection Keypoints functions (Harris+ Shi Tomasi + Modern methods), 
+  - Descriptor function to extract the keypoint and the descriptors, 
+  - Matching function from 2 images from the same camera
+
+* 'MidTermProject_Camera_Student.cpp' : main programm : the functions are called one by one as defined in the software architecture 
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
